@@ -19,7 +19,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS GasolinaData (
 
 with open('GasolinaData.csv', 'r') as f:
     next(f)
-    cur.copy_from(f, 'gasolinadata', sep=',', columns=('zonas_geografica_nombre', 'marca_nombre','combustible_precio'))
+    cur.copy_from(f, 'gasolinadata', sep=',', columns=('zonas_geografica_nombre', 'marca_nombre','combustible_precio','id_regional'))
 
 conn.commit()
 
