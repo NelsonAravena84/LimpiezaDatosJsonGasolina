@@ -42,8 +42,25 @@ df = pd.json_normalize(data, record_path=["data"])
 #nuevodata = nuevodata.reset_index(drop=True)
 
 def LimpiezaDatos(dataframe, marca):
-    eliminandocolumnas = dataframe.drop(['estacion_servicio_id','tipo_atencion','estacion_servicio_codigo','en_mantencion','comuna_nombre','comuna_id','estacion_direccion','region_nombre','region_id'], axis = 1)
-    dataframemarca = eliminandocolumnas[eliminandocolumnas['marca_nombre'] == marca]
+
+    #eliminación de columnas no deseadas
+    eliminandocolumnas = dataframe.drop(['estacion_servicio_id','tipo_atencion','estacion_servicio_codigo','en_mantencion','comuna_nombre','comuna_id','estacion_direccion','region_nombre','region_id','combustible_id','zona_geografica_id'], axis = 1)
+    dataframemarca = eliminandocolumnas[eliminandocolumnas['marca_nombre'] == marca].copy()
+
+    #conversión del tipo de dato
+    dataframemarca['zonas_geografica_nombre'] = dataframemarca['zonas_geografica_nombre'].convert_dtypes()
+    dataframemarca['marca_nombre'] = dataframemarca['marca_nombre'].convert_dtypes()
+    dataframemarca['combustible_precio'] = dataframemarca['combustible_precio'].astype(float)
+
+    #bucle para poder generar un numero especifico en base al tamaño de un dataframe
+    iterador = 0  
+    while iterador < len(dataframemarca):
+        iterador += 1
+        id_regional = 1
+
+    dataframemarca['id_regional'] = id_regional
+
+    #reseteo del index de las columnas
     dataframemarca = dataframemarca.reset_index(drop=True)
 
     return (dataframemarca)
@@ -65,9 +82,11 @@ DatosJLC = LimpiezaDatos (df, "JLC");
 
 #SEGUNDA FUNCIÓN
 DataframeNuevoFinal = unionDatos(DatosShell, DatosCopec, DatosPetrobras, DatosJLC);
-DataframeNuevoFinal.to_excel('output.xlsx', index=False)
+DataframeNuevoFinal.to_csv('GasolinaData.csv', index=False)
 
-print(DataframeNuevoFinal);
+print(DataframeNuevoFinal.dtypes)
+
+print(DataframeNuevoFinal.tail());
 
 
 
