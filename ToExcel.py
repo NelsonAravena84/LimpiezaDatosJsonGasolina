@@ -2,7 +2,7 @@ import json
 import pandas as pd 
 import openpyxl 
 
-f = open('data.json', 'r')
+f = open('Datos\Metropolitana.json', 'r')
 data = json.load(f)
 #print(data)
 
@@ -19,6 +19,9 @@ def LimpiezaDatos(dataframe, marca):
     dataframemarca['marca_nombre'] = dataframemarca['marca_nombre'].convert_dtypes()
     dataframemarca['combustible_precio'] = dataframemarca['combustible_precio'].astype(float)
 
+    #añadir una nueva columna 
+    tipocombustible = "Gasolina 93"
+    dataframemarca['Tipo_combustible'] = tipocombustible
 
     #OPERACIONES ARITMETICAS 
     Valores_sumados = dataframemarca['combustible_precio'].sum()
@@ -29,6 +32,7 @@ def LimpiezaDatos(dataframe, marca):
     #asignar al dataframe
     dataframemarca['combustible_precio'] = Media_promedio
     dataframemarca = dataframemarca.iloc[:1]
+
 
     #se resetea el index
     dataframemarca = dataframemarca.reset_index(drop=True)
@@ -53,9 +57,9 @@ DatosJLC = LimpiezaDatos (df, "JLC");
 
 #SEGUNDA FUNCIÓN
 DataframeNuevoFinal = unionDatos(DatosShell, DatosCopec, DatosPetrobras, DatosJLC);
-DataframeNuevoFinal.to_csv('GasolinaData.csv', index=False)
+#DataframeNuevoFinal.to_csv('GasolinaData.csv', index=False)
 
-print(DataframeNuevoFinal.dtypes)
+#print(DataframeNuevoFinal.dtypes)
 
 print(DataframeNuevoFinal.head());
 
