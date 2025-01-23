@@ -43,7 +43,16 @@ def JuntandoDatos(Number,RegionMetropolitana,RegionMagallanes,RegionValparaiso,R
 
 dataframeGasolina93 = JuntandoDatos(93,RegionMetropolitana93,RegionMagallanes93,RegionValparaiso93,RegionArica93)
 dataframeGasolina95 = JuntandoDatos(95,RegionMetropolitana95,RegionMagallanes95,RegionValparaiso95,RegionArica95)
-#dataframeGasolina97 = JuntandoDatos(RegionMetropolitana97,RegionMagallanes97,RegionValparaiso97,RegionArica97)
-#dataframeGasolinaDiesel = JuntandoDatos(RegionMetropolitanaDiesel,RegionMagallanesDiesel,RegionValparaisoDiesel,RegionAricaDiesel)
+dataframeGasolina97 = JuntandoDatos(97,RegionMetropolitana97,RegionMagallanes97,RegionValparaiso97,RegionArica97)
+dataframeGasolinaDiesel = JuntandoDatos("Diesel",RegionMetropolitanaDiesel,RegionMagallanesDiesel,RegionValparaisoDiesel,RegionAricaDiesel)
 
-print(dataframeGasolina95.head())
+#Funcion para juntar todos los dataframe 
+def juntandoDataframe():
+    DataframeFinal2 = [dataframeGasolina93,dataframeGasolina95,dataframeGasolina97,dataframeGasolinaDiesel]
+    finalmente1 = pd.concat(DataframeFinal2)
+    return finalmente1
+
+FinalmenteDataframe = juntandoDataframe()
+print(FinalmenteDataframe.tail())
+
+FinalmenteDataframe.to_excel("Autput.xlsx")
